@@ -1,0 +1,8 @@
+bin
+obj
+*.user
+*.suo
+*.sln.ide
+
+node_modules
+bower_components

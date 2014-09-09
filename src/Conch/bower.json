@@ -1,0 +1,26 @@
+{
+  "name": "Confabulum",
+  "version": "0.0.0",
+  "homepage": "https://github.com/markrendle/Confabulum",
+  "authors": [
+    "Mark Rendle <mark@markrendle.net>"
+  ],
+  "description": "Duplex presenting",
+  "main": "Startup.cs",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.3.0-rc.0",
+    "angular-ui-router": "~0.2.11",
+    "jquery": "1.11.1",
+    "dt-angular": "~1.2.16",
+    "dt-angular-ui": "~0.3.4"
+  }
+}

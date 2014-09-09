@@ -1,0 +1,23 @@
+﻿@model Conch.Deck
+
+<!DOCTYPE html>
+<html ng-app="present">
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.Title</title>
+    @foreach (var stylesheet in Model.GetStylesheets())
+    {
+        <link href="@stylesheet" rel="stylesheet" />
+    }
+</head>
+<body>
+    <div ui-view>
+        <div class="nav navbar navbar-fixed-top">
+            <div class="navbar-brand">@Model.Title</div>
+        </div>
+        <div class="container">
+            
+        </div>
+    </div>
+</body>
+</html>

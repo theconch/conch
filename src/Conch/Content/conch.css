@@ -1,0 +1,12 @@
+﻿.deck {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+}
+
+.slide-center {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
