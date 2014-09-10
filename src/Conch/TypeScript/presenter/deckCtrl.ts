@@ -1,7 +1,7 @@
 ﻿module Conch {
-    export class PresentCtrl {
+    export class DeckCtrl {
         constructor($scope: ng.IScope) {
-            $scope["presentCtrl"] = this;
+            $scope["deckCtrl"] = this;
         }
     }
 }

@@ -3,7 +3,6 @@
     bowerFiles = require('bower-files')();
 
 gulp.task('bower', function () {
-    console.log('Files: ' + bowerFiles.css);
     return gulp.src(bowerFiles.js)
         .pipe(gulp.dest('Scripts/vendor'));
 });

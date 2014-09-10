@@ -21,6 +21,7 @@
     "angular-ui-router": "~0.2.11",
     "jquery": "1.11.1",
     "dt-angular": "~1.2.16",
-    "dt-angular-ui": "~0.3.4"
+    "dt-angular-ui": "~0.3.4",
+    "angular-bootstrap": "~0.11.0"
   }
 }

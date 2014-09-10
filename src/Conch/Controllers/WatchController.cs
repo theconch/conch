@@ -7,7 +7,7 @@ namespace Conch.Controllers
     public class WatchController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(string deckName)
         {
             return View();
         }

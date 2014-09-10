@@ -59,12 +59,12 @@ namespace Conch
             {
                 routes.MapRoute(
                     name: "present",
-                    template: "present/{deckName}/{eventName}",
+                    template: "present/{deckName}",
                     defaults: new { controller = "Present", action = "Index" });
 
                 routes.MapRoute(
                     name: "watch",
-                    template: "watch/{deckName}/{eventName}",
+                    template: "watch/{deckName}",
                     defaults: new { controller = "Watch", action = "Index" });
 
                 routes.MapRoute(

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Conch
 {
@@ -7,11 +8,12 @@ namespace Conch
     /// </summary>
     public class Slide
     {
-	    public Slide()
-	    {
-		    //
-		    // TODO: Add constructor logic here
-		    //
-	    }
+        public string Title { get; set; }
+        public string TemplateUrl { get; set; }
+    }
+
+    public class SlideCollection
+    {
+        public IList<Slide> Slides { get; set; }
     }
 }
