@@ -32,6 +32,8 @@ namespace Conch
             // Set up application services
             app.UseServices(services =>
             {
+                services.AddTransient<JsonOutputFormatter, CamelCaseJsonFormatter>();
+
                 // Add EF services to the services container
                 services.AddEntityFramework()
                     .AddSqlServer();
@@ -50,9 +52,7 @@ namespace Conch
                 services.AddMvc()
                     .SetupOptions<MvcOptions>(options =>
                     {
-                        var currentJson = options.OutputFormatters.FirstOrDefault(f => f.Instance is JsonOutputFormatter);
-                        if (currentJson != null) options.OutputFormatters.Remove(currentJson);
-                        options.OutputFormatters.Add(new JsonOutputFormatter(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }, false));
+                        options.OutputFormatters.Replace(new JsonOutputFormatter(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }, false));
                     });
             });
 
@@ -96,6 +96,14 @@ namespace Conch
                     name: "api",
                     template: "{controller}/{id?}");
             });
+        }
+    }
+
+    public class CamelCaseJsonFormatter : JsonOutputFormatter
+    {
+        public CamelCaseJsonFormatter() : base (new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }, false)
+        {
+
         }
     }
 }
