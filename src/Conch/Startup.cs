@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity;
@@ -8,6 +9,10 @@ using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Conch.Models;
+using Microsoft.AspNet.StaticFiles;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Microsoft.AspNet.Mvc;
 
 namespace Conch
 {
@@ -15,6 +20,10 @@ namespace Conch
     {
         public void Configure(IBuilder app)
         {
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
             // Setup configuration sources
             var configuration = new Configuration();
             configuration.AddJsonFile("config.json");
@@ -32,13 +41,19 @@ namespace Conch
                 {
                     options.UseSqlServer(configuration.Get("Data:DefaultConnection:ConnectionString"));
                 });
-                
+
                 // Add Identity services to the services container
                 services.AddIdentitySqlServer<ApplicationDbContext, ApplicationUser>()
                     .AddAuthentication();
 
                 // Add MVC services to the services container
-                services.AddMvc();
+                services.AddMvc()
+                    .SetupOptions<MvcOptions>(options =>
+                    {
+                        var currentJson = options.OutputFormatters.FirstOrDefault(f => f.Instance is JsonOutputFormatter);
+                        if (currentJson != null) options.OutputFormatters.Remove(currentJson);
+                        options.OutputFormatters.Add(new JsonOutputFormatter(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }, false));
+                    });
             });
 
             // Enable Browser Link support
@@ -61,6 +76,11 @@ namespace Conch
                     name: "present",
                     template: "present/{deckName}",
                     defaults: new { controller = "Present", action = "Index" });
+
+                routes.MapRoute(
+                    name: "presentSlides",
+                    template: "present/{deckName}/slides",
+                    defaults: new { controller = "Present", action = "Slides" });
 
                 routes.MapRoute(
                     name: "watch",

@@ -1,8 +1,15 @@
-﻿/// <reference path="../../bower_components/dt-angular/angular.d.ts" />
-/// <reference path="../../bower_components/dt-angular-ui/angular-ui.d.ts" />
+﻿/// <reference path="../dt/angularjs/angular.d.ts" />
+/// <reference path="../dt/lodash/lodash.d.ts" />
+/// <reference path="../dt/angular-ui/angular-ui-router.d.ts" />
+
+/// <reference path="models.ts" />
+/// <reference path="presentservice.ts" />
+/// <reference path="deckctrl.ts" />
+/// <reference path="slidectrl.ts" />
 
 module Conch {
-    angular.module("presenter", ["ui.bootstrap", "ui.router"])
+    angular.module("presenter", ["ui.router"])
+        .service("presentService", PresentService)
         .config(($stateProvider: ng.ui.IStateProvider) => {
             $stateProvider
                 .state("deck", {

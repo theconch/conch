@@ -14,7 +14,7 @@ namespace Conch.Controllers
             var deck = new Deck
             {
                 Title = "The vNext Big Thing",
-                Stylesheets = "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css,/Content/conch.css"
+                Stylesheets = "//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/readable/bootstrap.min.css,//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css,/Content/conch.css"
             };
             return View(deck);
         }
@@ -25,10 +25,10 @@ namespace Conch.Controllers
             {
                 Slides = new[]
                 {
-                    new Slide
+                    new Slide("welcome")
                     {
                         Title = "Welcome",
-                        TemplateUrl = "/Decks/vNextBigThing/title.html"
+                        TemplateUrl = "/Decks/vNext/welcome.html"
                     }
                 }
             });

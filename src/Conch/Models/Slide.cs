@@ -8,6 +8,12 @@ namespace Conch
     /// </summary>
     public class Slide
     {
+        public Slide(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name must not be blank.");
+            this.Name = name;
+        }
+        public string Name { get; private set; }
         public string Title { get; set; }
         public string TemplateUrl { get; set; }
     }
