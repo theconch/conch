@@ -11,13 +11,10 @@
     }
 </head>
 <body>
+    <div class="nav navbar navbar-fixed-top">
+        <div class="navbar-brand">@Model.Title</div>
+    </div>
     <div ui-view>
-        <div class="nav navbar navbar-fixed-top">
-            <div class="navbar-brand">@Model.Title</div>
-        </div>
-        <div class="container">
-            
-        </div>
     </div>
     <script src="~/scripts/vendor/lodash.compat.js"></script>
     <script src="~/scripts/vendor/angular.js"></script>
