@@ -9,7 +9,6 @@ using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Conch.Models;
-using Microsoft.AspNet.StaticFiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNet.Mvc;

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.FileSystems;
+using Microsoft.AspNet.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,16 +24,16 @@ namespace Conch.Controllers
 
         public IActionResult Slides(string deckName)
         {
+            var deckData = new DeckData(deckName);
+            var slides = deckData.GetSlides().ToList();
+            if (slides.Count == 0)
+            {
+                return HttpNotFound();
+            }
+
             return new ObjectResult(new SlideCollection
             {
-                Slides = new[]
-                {
-                    new Slide("welcome")
-                    {
-                        Title = "Welcome",
-                        TemplateUrl = "/Decks/vNext/welcome.html"
-                    }
-                }
+                Slides = slides
             });
         }
     }

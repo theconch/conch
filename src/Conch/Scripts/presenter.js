@@ -6,9 +6,9 @@ var Conch;
             this.$http = $http;
             this.$q = $q;
         }
-        PresentService.prototype.getSlides = function (deckName) {
+        PresentService.prototype.getSlides = function () {
             var deferred = this.$q.defer();
-            this.$http.get("/present/" + deckName + "/slides", { cached: true }).success(function (dto) {
+            this.$http.get("slides", { cache: true }).success(function (dto) {
                 deferred.resolve(dto.slides);
             }).error(function (data, status, headers) {
                 deferred.reject(status);
@@ -22,8 +22,12 @@ var Conch;
 var Conch;
 (function (Conch) {
     var DeckCtrl = (function () {
-        function DeckCtrl($scope) {
+        // @ngInject
+        function DeckCtrl($scope, $state, presentService) {
             $scope["deckCtrl"] = this;
+            presentService.getSlides().then(function (slides) {
+                $state.go(".slide", { name: slides[0].name });
+            });
         }
         return DeckCtrl;
     })();
@@ -33,25 +37,48 @@ var Conch;
 (function (Conch) {
     var SlideCtrl = (function () {
         // @ngInject
-        function SlideCtrl($scope, $stateParams, presentService) {
+        function SlideCtrl($scope, $state, $stateParams, presentService) {
             var _this = this;
+            this.$state = $state;
             $scope["slideCtrl"] = this;
-            presentService.getSlides($stateParams.name).then(function (slides) {
+            presentService.getSlides().then(function (slides) {
                 _this.slides = slides;
                 var index = _.findIndex(slides, function (s) {
                     return s.name === $stateParams.name;
                 });
                 if (index > -1) {
+                    _this.currentIndex = index;
                     _this.slideTemplateUrl = slides[index].templateUrl;
-                    if (slides[index + 1]) {
-                        _this.nextLink = "#/" + slides[index + 1].name;
-                    }
-                    if (index > 0) {
-                        _this.previousLink = "#/" + slides[index - 1].name;
-                    }
                 }
             });
         }
+        Object.defineProperty(SlideCtrl.prototype, "canGoPrevious", {
+            get: function () {
+                return this.currentIndex > 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(SlideCtrl.prototype, "canGoNext", {
+            get: function () {
+                return !!this.slides[this.currentIndex + 1];
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        SlideCtrl.prototype.goPrevious = function () {
+            this.go(this.currentIndex - 1);
+        };
+
+        SlideCtrl.prototype.goNext = function () {
+            this.go(this.currentIndex + 1);
+        };
+
+        SlideCtrl.prototype.go = function (index) {
+            this.$state.go(".", { name: this.slides[index].name });
+        };
         return SlideCtrl;
     })();
     Conch.SlideCtrl = SlideCtrl;

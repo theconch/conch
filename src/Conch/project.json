@@ -8,6 +8,7 @@
         "Microsoft.AspNet.Server.IIS": "1.0.0-alpha3",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-alpha3",
         "Microsoft.AspNet.StaticFiles": "1.0.0-alpha3",
+        "Microsoft.AspNet.FileSystems": "1.0.0-alpha3",
         "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-alpha3",
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0-alpha2"
     },

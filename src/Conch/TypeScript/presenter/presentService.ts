@@ -5,9 +5,9 @@
         constructor(private $http: ng.IHttpService, private $q: ng.IQService) {
         }
 
-        public getSlides(deckName: string) {
+        public getSlides() {
             var deferred = this.$q.defer<Slide[]>();
-            this.$http.get("/present/" + deckName + "/slides", { cached: true })
+            this.$http.get("slides", { cache: true })
                 .success((dto: SlideList) => {
                     deferred.resolve(dto.slides);
                 })

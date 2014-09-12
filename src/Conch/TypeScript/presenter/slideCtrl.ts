@@ -12,22 +12,37 @@
         public previousLink: string;
 
         // @ngInject
-        constructor($scope: ng.IScope, $stateParams: SlideStateParams, presentService: PresentService) {
+        constructor($scope: ng.IScope, private $state: ng.ui.IStateService, $stateParams: SlideStateParams, presentService: PresentService) {
             $scope["slideCtrl"] = this;
-            presentService.getSlides($stateParams.name)
+            presentService.getSlides()
                 .then(slides => {
                     this.slides = slides;
                     var index = _.findIndex(slides, s => s.name === $stateParams.name);
                     if (index > -1) {
+                        this.currentIndex = index;
                         this.slideTemplateUrl = slides[index].templateUrl;
-                        if (slides[index + 1]) {
-                            this.nextLink = "#/" + slides[index + 1].name;
-                        }
-                        if (index > 0) {
-                            this.previousLink = "#/" + slides[index - 1].name;
-                        }
                     }
                 });
+        }
+
+        public get canGoPrevious() {
+            return this.currentIndex > 0;
+        }
+
+        public get canGoNext() {
+            return !!this.slides[this.currentIndex + 1];
+        }
+
+        public goPrevious() {
+            this.go(this.currentIndex - 1);
+        }
+
+        public goNext() {
+            this.go(this.currentIndex + 1);
+        }
+
+        private go(index: number) {
+            this.$state.go(".", { name: this.slides[index].name });
         }
     }
 }

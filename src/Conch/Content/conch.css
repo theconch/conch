@@ -11,3 +11,45 @@
     justify-content: center;
     flex-direction: row;
 }
+
+.slide {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.title-slide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.intro-slide {
+  padding-top: 50px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.intro-slide .title {
+  font-size: 3em;
+  padding: 20px 0;
+}
+
+.intro-slide .content {  
+  flex: 1;
+  font-size: 2em;
+  line-height: 2em;
+}
+
+.title-slide .title {
+    font-size: 4em;
+}
+
+.title-slide .subtitle {
+  font-size: 3em;
+}
