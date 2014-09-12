@@ -40,8 +40,7 @@ namespace Conch
                 // Configure DbContext
                 services.SetupOptions<DbContextOptions>(options =>
                 {
-                    var azure = configuration.Get("SQLAZURECONNSTR_Data:DefaultConnection:ConnectionString");
-                    options.UseSqlServer(configuration.Get("Data:DefaultConnection:ConnectionString"));
+                    options.UseSqlServer(configuration.GetConnectionString("Data:DefaultConnection:ConnectionString"));
                 });
 
                 // Add Identity services to the services container
