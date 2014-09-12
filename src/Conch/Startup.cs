@@ -28,6 +28,8 @@ namespace Conch
             configuration.AddJsonFile("config.json");
             configuration.AddEnvironmentVariables();
 
+            app.UseErrorPage();
+
             // Set up application services
             app.UseServices(services =>
             {
