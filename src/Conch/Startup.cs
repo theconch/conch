@@ -28,6 +28,8 @@ namespace Conch
             configuration.AddJsonFile("config.json");
             configuration.AddEnvironmentVariables();
 
+            Globals.ConnectionString = configuration.GetConnectionString("Data:DefaultConnection:ConnectionString");
+
             app.UseErrorPage();
 
             // Set up application services
