@@ -10,7 +10,7 @@ namespace Conch
     {
 	    public static string GetConnectionString(this IConfiguration configuration, string name)
 	    {
-            return configuration.Get("SQLAZURECONNSTR_" + name)
+            return configuration.Get("ConnectionString")
                 ?? configuration.Get(name);
 	    }
     }
