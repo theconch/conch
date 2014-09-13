@@ -3,14 +3,16 @@
 /// <reference path="../dt/angular-ui/angular-ui-router.d.ts" />
 
 /// <reference path="models.ts" />
+/// <reference path="liveservice.ts" />
 /// <reference path="presentservice.ts" />
 /// <reference path="deckctrl.ts" />
 /// <reference path="slidectrl.ts" />
 
 module Conch {
-    angular.module("presenter", ["ui.router"])
+    angular.module("presenter", ["ui.router","ngToast"])
         .service("presentService", PresentService)
-        .config(($stateProvider: ng.ui.IStateProvider) => {
+        .service("liveService", LiveService)
+        .config(($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) => {
             $stateProvider
                 .state("deck", {
                     url: "/",
@@ -22,5 +24,7 @@ module Conch {
                     templateUrl: "/partials/present/slide.html",
                     controller: SlideCtrl
                 });
+
+            $urlRouterProvider.otherwise("/");
         });
 }

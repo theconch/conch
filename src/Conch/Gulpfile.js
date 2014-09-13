@@ -25,4 +25,10 @@ gulp.task('tspresent', function () {
         .pipe(gulp.dest('scripts'));
 });
 
-gulp.task('default', ['bower', 'tspresent']);
+gulp.task('tswatch', function () {
+    return gulp.src(['TypeScript/watcher/watch.ts'])
+        .pipe(typescript({ target: 'ES5', out: 'watch.js', outDir: 'build', emitError: true, sourcemap: true }))
+        .pipe(gulp.dest('scripts'));
+});
+
+gulp.task('default', ['bower', 'tspresent', 'tswatch']);

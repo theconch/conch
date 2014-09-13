@@ -35,7 +35,12 @@ namespace Conch
             // Set up application services
             app.UseServices(services =>
             {
-                services.AddTransient<JsonOutputFormatter, CamelCaseJsonFormatter>();
+                services
+                    .AddSignalR()
+                    .SetupOptions(options =>
+                    {
+                        options.Hubs.EnableDetailedErrors = true;
+                    });
 
                 // Add EF services to the services container
                 services.AddEntityFramework()
@@ -72,6 +77,8 @@ namespace Conch
                 LoginPath = new PathString("/Account/Login"),
             });
 
+            app.UseSignalR();
+
             // Add MVC to the request pipeline
             app.UseMvc(routes =>
             {
@@ -91,6 +98,11 @@ namespace Conch
                     defaults: new { controller = "Watch", action = "Index" });
 
                 routes.MapRoute(
+                    name: "watchslides",
+                    template: "watch/{deckName}/slides",
+                    defaults: new { controller = "Watch", action = "Slides" });
+
+                routes.MapRoute(
                     name: "default", 
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" });
@@ -99,14 +111,6 @@ namespace Conch
                     name: "api",
                     template: "{controller}/{id?}");
             });
-        }
-    }
-
-    public class CamelCaseJsonFormatter : JsonOutputFormatter
-    {
-        public CamelCaseJsonFormatter() : base (new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }, false)
-        {
-
         }
     }
 }

@@ -10,6 +10,7 @@
         "Microsoft.AspNet.StaticFiles": "1.0.0-alpha3",
         "Microsoft.AspNet.FileSystems": "1.0.0-alpha3",
         "Microsoft.AspNet.Diagnostics": "1.0.0-alpha3",
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-alpha3",
         "Microsoft.Framework.ConfigurationModel.Json": "1.0.0-alpha3",
         "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0-alpha2"
     },

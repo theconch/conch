@@ -12,8 +12,9 @@
         public previousLink: string;
 
         // @ngInject
-        constructor($scope: ng.IScope, private $state: ng.ui.IStateService, $stateParams: SlideStateParams, presentService: PresentService) {
+        constructor($scope: ng.IScope, private $state: ng.ui.IStateService, $stateParams: SlideStateParams, presentService: PresentService, liveService: LiveService) {
             $scope["slideCtrl"] = this;
+            liveService.connect("vNext");
             presentService.getSlides()
                 .then(slides => {
                     this.slides = slides;
@@ -21,6 +22,7 @@
                     if (index > -1) {
                         this.currentIndex = index;
                         this.slideTemplateUrl = slides[index].templateUrl;
+                        liveService.move("vNext", index);
                     }
                 });
         }
@@ -30,7 +32,7 @@
         }
 
         public get canGoNext() {
-            return !!this.slides[this.currentIndex + 1];
+            return !!(this.slides && this.slides[this.currentIndex + 1]);
         }
 
         public goPrevious() {
