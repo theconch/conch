@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Routing;
@@ -9,34 +7,25 @@ using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Conch.Models;
+using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Microsoft.AspNet.Mvc;
 
 namespace Conch
 {
     public class Startup
     {
-        public void Configure(IBuilder app)
+        public void Configure(IApplicationBuilder app)
         {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
             // Setup configuration sources
             var configuration = new Configuration();
             configuration.AddJsonFile("config.json");
             configuration.AddEnvironmentVariables();
 
-            Globals.ConnectionString = configuration.GetConnectionString("Data:DefaultConnection:ConnectionString");
-
-            app.UseErrorPage();
-
             // Set up application services
             app.UseServices(services =>
             {
-                services
-                    .AddSignalR()
+                services.AddSignalR()
                     .SetupOptions(options =>
                     {
                         options.Hubs.EnableDetailedErrors = true;
@@ -51,7 +40,7 @@ namespace Conch
                 {
                     options.UseSqlServer(configuration.GetConnectionString("Data:DefaultConnection:ConnectionString"));
                 });
-
+                
                 // Add Identity services to the services container
                 services.AddIdentitySqlServer<ApplicationDbContext, ApplicationUser>()
                     .AddAuthentication();

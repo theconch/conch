@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Framework.Runtime;
 
 namespace Conch
 {
@@ -15,13 +16,16 @@ namespace Conch
         private readonly string _deckName;
         private readonly string _htmlPathBase;
         private readonly PhysicalFileSystem _fileSystem;
+        private IApplicationEnvironment _environment;
+        private string deckName;
 
-	    public DeckData(string deckName)
-	    {
+        public DeckData(IApplicationEnvironment environment, string deckName)
+        {
+            _environment = environment;
             _deckName = deckName;
             _htmlPathBase = "/decks/" + deckName;
-            _fileSystem = new PhysicalFileSystem(".");
-	    }
+            _fileSystem = new PhysicalFileSystem(environment.ApplicationBasePath);
+        }
 
         public IEnumerable<Slide> GetSlides()
         {

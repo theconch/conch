@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.FileSystems;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.Runtime;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,12 @@ namespace Conch.Controllers
     [Authorize]
     public class PresentController : Controller
     {
+        private readonly IApplicationEnvironment _environment;
+        public PresentController(IApplicationEnvironment environment)
+        {
+            _environment = environment;
+        }
+
         // GET: /<controller>/
         public IActionResult Index(string deckName)
         {
@@ -24,7 +31,7 @@ namespace Conch.Controllers
 
         public IActionResult Slides(string deckName)
         {
-            var deckData = new DeckData(deckName);
+            var deckData = new DeckData(_environment, deckName);
             var slides = deckData.GetSlides().ToList();
             if (slides.Count == 0)
             {

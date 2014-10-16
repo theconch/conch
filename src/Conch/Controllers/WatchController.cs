@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
+using Microsoft.Framework.Runtime;
 using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,6 +8,12 @@ namespace Conch.Controllers
 {
     public class WatchController : Controller
     {
+        private readonly IApplicationEnvironment _environment;
+        public WatchController(IApplicationEnvironment environment)
+        {
+            _environment = environment;
+        }
+
         // GET: /<controller>/
         public IActionResult Index(string deckName)
         {
@@ -20,7 +27,7 @@ namespace Conch.Controllers
 
         public IActionResult Slides(string deckName)
         {
-            var deckData = new DeckData(deckName);
+            var deckData = new DeckData(_environment, deckName);
             var slides = deckData.GetSlides().ToList();
             if (slides.Count == 0)
             {

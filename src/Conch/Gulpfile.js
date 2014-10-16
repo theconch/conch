@@ -16,19 +16,19 @@
 
 gulp.task('bower', function () {
     return gulp.src(bowerFiles.js)
-        .pipe(gulp.dest('Scripts/vendor'));
+        .pipe(gulp.dest('wwwroot/Scripts/vendor'));
 });
 
 gulp.task('tspresent', function () {
     return gulp.src(['TypeScript/presenter/app.ts'])
         .pipe(typescript({ target: 'ES5', out: 'presenter.js', outDir: 'build', emitError: true, sourcemap: true }))
-        .pipe(gulp.dest('scripts'));
+        .pipe(gulp.dest('wwwroot/Scripts'));
 });
 
 gulp.task('tswatch', function () {
     return gulp.src(['TypeScript/watcher/watch.ts'])
         .pipe(typescript({ target: 'ES5', out: 'watch.js', outDir: 'build', emitError: true, sourcemap: true }))
-        .pipe(gulp.dest('scripts'));
+        .pipe(gulp.dest('wwwroot/Scripts'));
 });
 
 gulp.task('default', ['bower', 'tspresent', 'tswatch']);
