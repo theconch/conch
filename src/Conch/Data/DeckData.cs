@@ -17,7 +17,6 @@ namespace Conch
         private readonly string _htmlPathBase;
         private readonly PhysicalFileSystem _fileSystem;
         private IApplicationEnvironment _environment;
-        private string deckName;
 
         public DeckData(IApplicationEnvironment environment, string deckName)
         {
